@@ -1,9 +1,0 @@
-{
-  "name": "react-components",
-  "version": "1.0.0",
-  "main": "index.js",
-  "license": "MIT",
-  "dependencies": {
-    "@stitches/react": "^1.2.8"
-  }
-}

@@ -1,3 +1,6 @@
+const prettier = require('prettier');
+const lerna = require('./../lerna.json');
+
 module.exports = function (plop) {
   plop.setGenerator('component', {
     description: 'Create a new React component',
