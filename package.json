@@ -5,7 +5,8 @@
   "license": "MIT",
   "private": true,
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "packages/react-components/*"
   ],
   "devDependencies": {
     "@babel/cli": "^7.21.5",
@@ -25,6 +26,7 @@
     "@types/jest": "^29.5.1",
     "babel-loader": "^9.1.2",
     "babel-plugin-styled-components": "^2.1.1",
+    "esbuild": "^0.17.18",
     "jest": "^29.5.0",
     "jest-environment-jsdom": "^29.5.0",
     "lerna": "^6.6.2",
@@ -34,6 +36,7 @@
     "react-dom": "^18.2.0",
     "storybook": "^7.0.9",
     "ts-jest": "^29.1.0",
+    "tsup": "5.11.13",
     "typescript": "^5.0.4"
   },
   "scripts": {

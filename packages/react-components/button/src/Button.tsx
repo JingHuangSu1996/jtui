@@ -1,13 +1,13 @@
-import React from "react";
+import React from 'react';
 
-type ButtonProps = {
-  /** Add a description comment for each prop. */
-};
-
-const Button = React.forwardRef<HTMLDivElement, ButtonProps>(({}, ref) => {
-  return <div>Hello World</div>;
+export const Button = React.forwardRef<HTMLDivElement, ButtonProps>(({ children }, ref) => {
+  return <button>{children}</button>;
 });
 
-Button.displayName = "Button";
+interface ButtonProps {
+  children: React.ReactNode;
+}
 
-export { Button };
+Button.displayName = 'Button';
+
+export type { ButtonProps };
