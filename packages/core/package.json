@@ -1,0 +1,14 @@
+{
+  "name": "core",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.5",
+    "@types/react-dom": "^18.2.4"
+  }
+}
