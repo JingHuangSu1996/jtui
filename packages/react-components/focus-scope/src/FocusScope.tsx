@@ -1,31 +1,6 @@
-import React, { ReactNode, RefObject, useContext, useEffect, useRef } from 'react';
-import { getFocusElementScope } from './utils';
-
-type FocusScopeProps = {
-  /** Add a description comment for each prop. */
-  children: ReactNode;
-};
-
-export interface FocusableElement extends Element, HTMLOrSVGElement {}
-
-export interface FocusManagerOptions {
-  /** The element to start searching from. The currently focused element by default. */
-  from?: Element;
-  /** Whether to only include tabbable elements, or all focusable elements. */
-  tabbable?: boolean;
-  /** Whether focus should wrap around when it reaches the end of the scope. */
-  wrap?: boolean;
-}
-export interface FocusManager {
-  /** Moves focus to the next focusable or tabbable element in the focus scope. */
-  focusNext(opts?: FocusManagerOptions): FocusableElement;
-  /** Moves focus to the previous focusable or tabbable element in the focus scope. */
-  focusPrevious(opts?: FocusManagerOptions): FocusableElement;
-}
-
-interface IFocusContext {
-  focusManager: FocusManager;
-}
+import React, { RefObject, useContext, useEffect, useRef } from 'react';
+import { useAutoFocus } from './hooks/useAutoFocus';
+import { getFocusElementScope, IFocusContext, FocusManager, FocusManagerOptions, FocusScopeProps } from './shared';
 
 const FocusContext = React.createContext<IFocusContext>(null);
 
@@ -82,7 +57,7 @@ export const createFocusManager = (scopeRef: RefObject<Element[]>): FocusManager
   };
 };
 
-export const FocusScope = ({ children }: FocusScopeProps) => {
+export const FocusScope = ({ children, autoFocus }: FocusScopeProps) => {
   const startRef = useRef<HTMLSpanElement>(null);
   const endRef = useRef<HTMLSpanElement>(null);
   const scopeRef = useRef<Element[]>([]);
@@ -98,7 +73,9 @@ export const FocusScope = ({ children }: FocusScopeProps) => {
     scopeRef.current = nodes;
   }, [children]);
 
-  let focusManager: FocusManager = createFocusManager(scopeRef);
+  useAutoFocus(scopeRef, autoFocus);
+
+  let focusManager = createFocusManager(scopeRef);
 
   return (
     <FocusContext.Provider value={{ focusManager }}>
