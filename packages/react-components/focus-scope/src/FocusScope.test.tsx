@@ -154,4 +154,52 @@ describe('FocusScope', function () {
       expect(document.activeElement).toBe(item3);
     });
   });
+
+  describe('auto focus', function () {
+    it('should auto focus first element in the scope on mount', function () {
+      function Component() {
+        return (
+          <FocusScope autoFocus>
+            <button data-testid="item1">item 1</button>
+            <button data-testid="item2">item 2</button>
+            <button data-testid="item3">item 3</button>
+          </FocusScope>
+        );
+      }
+
+      render(<Component />);
+      expect(document.activeElement).toBe(screen.getByTestId('item1'));
+    });
+
+    it('should auto focus first tabbable element in the scope on mount', function () {
+      function Component() {
+        return (
+          <FocusScope autoFocus>
+            <div />
+            <button data-testid="item1">item 1</button>
+            <button data-testid="item2">item 2</button>
+            <button data-testid="item3">item 3</button>
+          </FocusScope>
+        );
+      }
+
+      render(<Component />);
+      expect(document.activeElement).toBe(screen.getByTestId('item1'));
+    });
+
+    it('should auto focus first tabbable element in the scope on mount', function () {
+      function Component() {
+        return (
+          <FocusScope autoFocus>
+            <button data-testid="item1">item 1</button>
+            <input data-testid="item2" autoFocus />
+            <button data-testid="item3">item 3</button>
+          </FocusScope>
+        );
+      }
+
+      render(<Component />);
+      expect(document.activeElement).toBe(screen.getByTestId('item2'));
+    });
+  });
 });
