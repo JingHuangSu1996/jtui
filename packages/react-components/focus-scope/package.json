@@ -1,6 +1,6 @@
 {
   "name": "@jtui/focus-scope",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "JUI FocusScope",
   "license": "MIT",
   "source": "src/index.ts",
