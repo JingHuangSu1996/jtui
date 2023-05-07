@@ -7,6 +7,7 @@ export type FocusScopeProps = {
   /** Add a description comment for each prop. */
   children: ReactNode;
   autoFocus?: Boolean;
+  contain?: Boolean;
 };
 
 export interface FocusableElement extends Element, HTMLOrSVGElement {}

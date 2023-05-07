@@ -5,7 +5,9 @@ import FocusScope from `@jtui/focus-scope`;
 
 function Component() {
 	return (
-		<FocusScope />
+		<FocusScope autoFocus contain>
+			// your component
+		</FocusScope>
 	);
 }
 ```
