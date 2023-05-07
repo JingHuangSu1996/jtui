@@ -47,6 +47,10 @@ export const createFocusManager = (scopeRef: RefObject<Element[]>): FocusManager
           ),
       );
 
+      if (!nextNode && opts?.wrap) {
+        nextNode = focusable[0];
+      }
+
       if (nextNode) {
         (nextNode as HTMLElement).focus();
       }
@@ -64,6 +68,10 @@ export const createFocusManager = (scopeRef: RefObject<Element[]>): FocusManager
             (Node.DOCUMENT_POSITION_PRECEDING | Node.DOCUMENT_POSITION_CONTAINED_BY)
           ),
       );
+
+      if (!previousNode && opts?.wrap) {
+        previousNode = focusable[0];
+      }
 
       if (previousNode) {
         (previousNode as HTMLElement).focus();
