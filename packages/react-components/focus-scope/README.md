@@ -1,7 +1,7 @@
 # FocusScope
 
 ```jsx
-import FocusScope from `@jui/focus-scope`;
+import FocusScope from `@jtui/focus-scope`;
 
 function Component() {
 	return (
