@@ -1,5 +1,6 @@
 import React, { RefObject, useContext, useEffect, useRef } from 'react';
 import { useAutoFocus } from './hooks/useAutoFocus';
+import { useFocusContainment } from './hooks/useFocusContainment';
 import { getFocusElementScope, IFocusContext, FocusManager, FocusManagerOptions, FocusScopeProps } from './shared';
 
 const FocusContext = React.createContext<IFocusContext>(null);
@@ -57,7 +58,7 @@ export const createFocusManager = (scopeRef: RefObject<Element[]>): FocusManager
   };
 };
 
-export const FocusScope = ({ children, autoFocus }: FocusScopeProps) => {
+export const FocusScope = ({ children, autoFocus, contain }: FocusScopeProps) => {
   const startRef = useRef<HTMLSpanElement>(null);
   const endRef = useRef<HTMLSpanElement>(null);
   const scopeRef = useRef<Element[]>([]);
@@ -74,6 +75,7 @@ export const FocusScope = ({ children, autoFocus }: FocusScopeProps) => {
   }, [children]);
 
   useAutoFocus(scopeRef, autoFocus);
+  useFocusContainment(scopeRef, contain);
 
   let focusManager = createFocusManager(scopeRef);
 

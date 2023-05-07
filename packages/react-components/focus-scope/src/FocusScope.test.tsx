@@ -1,5 +1,6 @@
 import React from 'react';
 import { act, fireEvent, render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { FocusScope, useFocusManager } from './';
 
 describe('FocusScope', function () {
@@ -200,6 +201,43 @@ describe('FocusScope', function () {
 
       render(<Component />);
       expect(document.activeElement).toBe(screen.getByTestId('item2'));
+    });
+  });
+
+  describe('contain', function () {
+    it('should contain focus within the scope', function () {
+      function Component() {
+        return (
+          <FocusScope contain>
+            <button data-testid="item1">item 1</button>
+            <button data-testid="item2">item 2</button>
+            <button data-testid="item3">item 3</button>
+          </FocusScope>
+        );
+      }
+
+      render(<Component />);
+
+      let item1 = screen.getByTestId('item1');
+      let item2 = screen.getByTestId('item2');
+      let item3 = screen.getByTestId('item3');
+
+      act(() => {
+        item1.focus();
+      });
+
+      userEvent.tab();
+      expect(document.activeElement).toBe(item2);
+      userEvent.tab();
+      expect(document.activeElement).toBe(item3);
+      userEvent.tab();
+      expect(document.activeElement).toBe(item1);
+      userEvent.tab({ shift: true });
+      expect(document.activeElement).toBe(item3);
+      userEvent.tab({ shift: true });
+      expect(document.activeElement).toBe(item2);
+      userEvent.tab({ shift: true });
+      expect(document.activeElement).toBe(item1);
     });
   });
 });
