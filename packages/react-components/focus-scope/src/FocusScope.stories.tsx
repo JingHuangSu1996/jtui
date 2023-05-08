@@ -34,6 +34,44 @@ const Template: StoryFn<typeof Component> = (args) => {
   }
 
   return (
+    <Component autoFocus>
+      <MockButton data-testid="item1">item 1</MockButton>
+      <MockButton data-testid="item2">item 2</MockButton>
+      <MockButton data-testid="item3">item 3</MockButton>
+    </Component>
+  );
+};
+
+export const AutoFocus = Template.bind({});
+
+AutoFocus.args = {};
+
+const TemplateContain: StoryFn<typeof Component> = (args) => {
+  function MockButton(props: any) {
+    let focusManager = useFocusManager();
+    let onKeyDown = (e) => {
+      console.log(e.key);
+
+      switch (e.key) {
+        case 'ArrowRight':
+          focusManager.focusNext({ wrap: true });
+          break;
+        case 'ArrowLeft':
+          focusManager.focusPrevious({ wrap: true });
+          break;
+        default:
+          break;
+      }
+    };
+
+    return (
+      <button {...props} onKeyDown={onKeyDown}>
+        {props.children}
+      </button>
+    );
+  }
+
+  return (
     <Component autoFocus contain>
       <MockButton data-testid="item1">item 1</MockButton>
       <MockButton data-testid="item2">item 2</MockButton>
@@ -42,6 +80,4 @@ const Template: StoryFn<typeof Component> = (args) => {
   );
 };
 
-export const FocusScope = Template.bind({});
-
-FocusScope.args = {};
+export const Contain = TemplateContain.bind({});
