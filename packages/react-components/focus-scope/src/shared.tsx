@@ -1,4 +1,4 @@
-import { RefObject, ReactNode } from 'react';
+import { ReactNode } from 'react';
 
 /**
  * ======== Type Declarations ========
@@ -8,6 +8,7 @@ export type FocusScopeProps = {
   children: ReactNode;
   autoFocus?: Boolean;
   contain?: Boolean;
+  restoreFocus?: Boolean;
 };
 
 export interface FocusableElement extends Element, HTMLOrSVGElement {}

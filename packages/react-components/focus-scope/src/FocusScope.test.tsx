@@ -240,4 +240,33 @@ describe('FocusScope', function () {
       expect(document.activeElement).toBe(item1);
     });
   });
+
+  describe('restore focus', function () {
+    it.skip('should restore focus to the previously focused node after a child with autoFocus unmounts', function () {
+      function Component({ show }: any) {
+        return (
+          <div>
+            <input data-testid="outside" autoFocus />
+            {show && (
+              <FocusScope restoreFocus>
+                <input data-testid="item1" autoFocus />
+                <input data-testid="item2" />
+                <input data-testid="item3" />
+              </FocusScope>
+            )}
+          </div>
+        );
+      }
+
+      const { getByTestId, rerender } = render(<Component />);
+
+      let outside = getByTestId('outside');
+      expect(document.activeElement).toBe(outside);
+      rerender(<Component show />);
+      let item1 = getByTestId('item1');
+      expect(document.activeElement).toBe(item1);
+      rerender(<Component />);
+      expect(document.activeElement).toBe(outside);
+    });
+  });
 });
