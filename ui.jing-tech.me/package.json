@@ -8,6 +8,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
+    "build": "next build",
     "dev": "next-remote-watch ./docs",
     "start": "next start",
     "lint": "next lint",
