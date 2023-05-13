@@ -1,9 +1,10 @@
 {
   "name": "@jtui/design-tokens",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "description": "JUI Design Tokens",
   "license": "MIT",
-  "main": "dist/css/variables.css",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
   "files": [
     "dist",
     "tokens"
