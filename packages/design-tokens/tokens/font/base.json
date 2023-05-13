@@ -1,0 +1,38 @@
+{
+  "font": {
+    "size": {
+      "100": {
+        "value": "12px"
+      },
+      "200": {
+        "value": "14px"
+      },
+      "300": {
+        "value": "16px"
+      },
+      "400": {
+        "value": "20px"
+      },
+      "500": {
+        "value": "28px"
+      },
+      "600": {
+        "value": "36px"
+      }
+    },
+    "weight": {
+      "normal": {
+        "value": "400",
+        "comment": "Default font weight"
+      },
+      "semibold": {
+        "value": "600",
+        "comment": "Font weight used for column headers, headings, and inline-links"
+      },
+      "bold": {
+        "value": "700",
+        "comment": "Currently unused. Font weight used for column headers, headings, and inline-links"
+      }
+    }
+  }
+}

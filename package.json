@@ -6,7 +6,8 @@
   "private": true,
   "workspaces": [
     "packages/*",
-    "packages/react-components/*"
+    "packages/react-components/*",
+    "ui.jing-tech.me/*"
   ],
   "devDependencies": {
     "@babel/cli": "^7.21.5",
