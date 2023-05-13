@@ -7,3 +7,4 @@ dist/
 build/
 .jest-cache/
 jest-coverage
+.next
