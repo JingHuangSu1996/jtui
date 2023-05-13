@@ -1,6 +1,6 @@
 {
   "name": "@jtui/design-tokens",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "JUI Design Tokens",
   "license": "MIT",
   "main": "./dist/index.js",
