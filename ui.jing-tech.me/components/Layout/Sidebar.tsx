@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import classNames from 'classNames';
+import classNames from 'classnames';
 import { styled, theme } from '@jtui/theme';
 import { Root, Header, Trigger, AccordionContent as Content, Item } from '@radix-ui/react-accordion';
 import { ChevronDownIcon } from '@radix-ui/react-icons';
@@ -61,7 +61,7 @@ const AccordionHeader = styled(Header, {
   },
 });
 
-const RadixAccordionTrigger = React.forwardRef(({ children, className, ...props }, forwardedRef) => (
+const RadixAccordionTrigger = React.forwardRef(({ children, className, ...props }: any, forwardedRef) => (
   <Trigger className={classNames('AccordionTrigger', className)} {...props} ref={forwardedRef}>
     {children}
     <ChevronDownIcon className="AccordionChevron" aria-hidden />
