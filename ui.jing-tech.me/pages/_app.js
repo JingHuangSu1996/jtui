@@ -2,9 +2,10 @@ import React from 'react';
 import { ThemeProvider } from 'next-themes';
 import { DefaultSeo } from 'next-seo';
 import 'react-toastify/dist/ReactToastify.css';
-import { globalStyles, darkTheme, globalCss } from '@jtui/theme';
+import { globalStyles, darkTheme, globalCss, theme } from '@jtui/theme';
 import { useRouter } from 'next/router';
 import SEO from '../next-seo.config';
+import { PageLayout } from '~/components/Layout';
 
 const pageview = (url) => {
   window.dataLayer = window.dataLayer || [];
@@ -34,6 +35,8 @@ function App({ Component, pageProps }) {
     };
   }, [router.events]);
 
+  console.log(pageProps);
+
   return (
     <>
       <DefaultSeo {...SEO} />
@@ -54,7 +57,9 @@ function App({ Component, pageProps }) {
             </>,
           )
         ) : (
-          <Component {...pageProps} />
+          <PageLayout {...pageProps}>
+            <Component {...pageProps} />
+          </PageLayout>
         )}
       </ThemeProvider>
     </>

@@ -29,7 +29,7 @@
         },
         {
           "destination": "variables-dark.json",
-          "format": "json/flat",
+          "format": "cssDarkJson",
           "filter": "customDarkColorFilter"
         },
         {
