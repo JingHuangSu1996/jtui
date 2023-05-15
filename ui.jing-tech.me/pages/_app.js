@@ -2,7 +2,7 @@ import React from 'react';
 import { ThemeProvider } from 'next-themes';
 import { DefaultSeo } from 'next-seo';
 import 'react-toastify/dist/ReactToastify.css';
-import { globalStyles, darkTheme, globalCss, theme } from '@jtui/theme';
+import { globalStyles, darkTheme, globalCss, theme, config } from '@jtui/theme';
 import { useRouter } from 'next/router';
 import SEO from '../next-seo.config';
 import { PageLayout } from '~/components/Layout';
@@ -35,7 +35,7 @@ function App({ Component, pageProps }) {
     };
   }, [router.events]);
 
-  console.log(pageProps);
+  console.log('=======pageProps=========', pageProps, config);
 
   return (
     <>

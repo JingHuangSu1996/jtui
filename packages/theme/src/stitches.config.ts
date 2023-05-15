@@ -22,16 +22,21 @@ const JTUI = createStitches({
   theme: {
     colors: {
       ...colorTokens,
+      ...tokens.color.red,
+      ...tokens.color.pink,
+      ...tokens.color.blue,
+      ...tokens.color.green,
+      ...tokens.color.gray,
+      ...tokens.color.teal,
+      ...tokens.color.purple,
+      ...tokens.color.orange,
+      ...tokens.color.yellow,
+      ...tokens.color.black,
+      ...tokens.color.white,
     },
     space: tokens.space,
     fontSizes: tokens.font.size,
     fontWeights: tokens.font.weight,
-    lineHeights: {
-      headline: '$110',
-      body: '$160',
-      meta: '$125',
-      subhead: '$meta',
-    },
     opacity: tokens.opacity,
     transitions: {
       allFast: 'all $fast $inOut',

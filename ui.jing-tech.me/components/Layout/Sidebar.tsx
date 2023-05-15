@@ -88,7 +88,6 @@ const AccordionLabel = styled('span', {
 });
 
 const AccordionContent = styled(Content, {
-  padding: '0 $400',
   fontSize: '$300',
   color: theme.colors['color-text-default'],
 });
@@ -150,7 +149,7 @@ const CustomLink = styled('a', {
   borderLeft: '0 solid',
   marginLeft: '-4px',
   lineHeight: '12px',
-  padding: '$200 $200 $200 $200',
+  padding: '$200 $200 $200 $400',
   '&:focus': {
     outlineColor: '$signal',
     outlineStyle: 'solid',
