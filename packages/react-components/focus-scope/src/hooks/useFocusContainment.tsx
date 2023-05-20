@@ -2,10 +2,11 @@ import { RefObject, useEffect, useRef } from 'react';
 import {
   FocusableElement,
   isElementInScope,
-  getFocusElementScope,
   sharedState,
   focusFirstInScope,
   focusElement,
+  getFocusableTreeWalker,
+  getScopeRoot,
 } from '../shared';
 
 export const useFocusContainment = (scopeRef: RefObject<Element[]>, contain: Boolean) => {
@@ -27,26 +28,22 @@ export const useFocusContainment = (scopeRef: RefObject<Element[]>, contain: Boo
         return;
       }
 
-      const focusableElements = getFocusElementScope(scope, { tabbable: true });
-      const lastPosition = focusableElements.length - 1;
-      let position = focusableElements.indexOf(focusedElement);
-      let nextElement = null;
+      const walker = getFocusableTreeWalker(getScopeRoot(scope), { tabbable: true }, scope);
+      walker.currentNode = focusedElement;
 
-      if (e.shiftKey) {
-        if (position === 0) {
-          nextElement = focusableElements[lastPosition];
-        } else {
-          nextElement = focusableElements[position - 1];
-        }
-      } else {
-        if (position === lastPosition) {
-          nextElement = focusableElements[0];
-        } else {
-          nextElement = focusableElements[position + 1];
-        }
+      const lastPosition = scope.length - 1;
+      let nextElement = e.shiftKey ? walker.previousNode() : walker.nextNode();
+
+      if (!nextElement) {
+        walker.currentNode = e.shiftKey ? scope[lastPosition].nextElementSibling : scope[0].previousElementSibling;
+        nextElement = e.shiftKey ? walker.previousNode() : walker.nextNode();
       }
+
       e.preventDefault();
-      focusElement(nextElement);
+
+      if (nextElement) {
+        focusElement(nextElement as FocusableElement);
+      }
     };
 
     const onFocus = (e: FocusEvent) => {

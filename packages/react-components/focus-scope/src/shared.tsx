@@ -65,19 +65,29 @@ export let sharedState: { activeScope: Element[] | null } = {
   activeScope: null,
 };
 
-export function getFocusElementScope(scope: Element[], opts: any) {
-  let res = [];
+export function getScopeRoot(scope: Element[]) {
+  return scope[0].parentElement;
+}
 
-  let selector = opts?.tabbable ? TABBABLE_ELEMENT_SELECTOR : FOCUSABLE_ELEMENT_SELECTOR;
+export function getFocusableTreeWalker(root, opts: FocusManagerOptions, scope: Element[]) {
+  const selector = opts?.tabbable ? TABBABLE_ELEMENT_SELECTOR : FOCUSABLE_ELEMENT_SELECTOR;
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_ELEMENT, {
+    acceptNode: (node: FocusableElement) => {
+      if (opts.from?.contains(node)) {
+        return NodeFilter.FILTER_REJECT;
+      }
 
-  for (let node of scope) {
-    if (node.matches(selector)) {
-      res.push(node);
-    }
-    res.push(...Array.from(node.querySelectorAll(selector)));
+      if (node.matches(selector) && (!scope || isElementInScope(node, scope))) {
+        return NodeFilter.FILTER_ACCEPT;
+      }
+
+      return NodeFilter.FILTER_SKIP;
+    },
+  });
+  if (opts.from) {
+    walker.currentNode = opts.from;
   }
-
-  return res;
+  return walker;
 }
 
 export function isElementInScope(el: Element, scope: Element[]) {
@@ -85,8 +95,11 @@ export function isElementInScope(el: Element, scope: Element[]) {
 }
 
 export function focusFirstInScope(scope) {
-  const elements = getFocusElementScope(scope, { tabbable: true });
-  focusElement(elements[0]);
+  let sential = scope[0].previousElementSibling;
+  const walker = getFocusableTreeWalker(getScopeRoot(scope), { tabbable: true }, scope);
+
+  walker.currentNode = sential;
+  focusElement(walker.nextNode() as FocusableElement);
 }
 
 export function focusElement(el: FocusableElement) {
