@@ -2,7 +2,17 @@ import React, { RefObject, useContext, useEffect, useRef } from 'react';
 import { useAutoFocus } from './hooks/useAutoFocus';
 import { useFocusContainment } from './hooks/useFocusContainment';
 import { useRestoreFocus } from './hooks/useRestoreFocus';
-import { getFocusElementScope, IFocusContext, FocusManager, FocusManagerOptions, FocusScopeProps } from './shared';
+import {
+  IFocusContext,
+  FocusManager,
+  FocusManagerOptions,
+  FocusScopeProps,
+  getFocusableTreeWalker,
+  getScopeRoot,
+  isElementInScope,
+  focusElement,
+  FocusableElement,
+} from './shared';
 
 const FocusContext = React.createContext<IFocusContext>(null);
 
@@ -12,46 +22,48 @@ export const useFocusManager = (): FocusManager => {
 
 export const createFocusManager = (scopeRef: RefObject<Element[]>): FocusManager => {
   return {
-    focusNext: (opts: FocusManagerOptions) => {
-      let node = opts?.from || document.activeElement;
-      let focusable = getFocusElementScope(scopeRef.current, opts);
+    focusNext: (opts: FocusManagerOptions = {}): any => {
+      const scope = scopeRef.current;
+      const { from, tabbable, wrap } = opts;
+      let node = from || document.activeElement;
+      const sential = scope[0].previousElementSibling;
 
-      let nextNode = focusable.find(
-        (el) =>
-          !!(
-            (node as HTMLElement).compareDocumentPosition(el) &
-            (Node.DOCUMENT_POSITION_FOLLOWING | Node.DOCUMENT_POSITION_CONTAINED_BY)
-          ),
-      );
+      const walker = getFocusableTreeWalker(getScopeRoot(scope), { tabbable }, scope);
 
-      if (!nextNode && opts?.wrap) {
-        nextNode = focusable[0];
+      walker.currentNode = isElementInScope(node, scope) ? node : sential;
+
+      let nextNode = walker.nextNode();
+
+      if (!nextNode && wrap) {
+        walker.currentNode = sential;
+        nextNode = walker.nextNode();
       }
 
       if (nextNode) {
-        (nextNode as HTMLElement).focus();
+        focusElement(nextNode as FocusableElement);
       }
 
       return nextNode;
     },
-    focusPrevious: (opts: FocusManagerOptions) => {
-      let node = opts?.from || document.activeElement;
-      let focusable = getFocusElementScope(scopeRef.current, opts).reverse();
+    focusPrevious: (opts: FocusManagerOptions = {}): any => {
+      const scope = scopeRef.current;
+      const { from, tabbable, wrap } = opts;
+      let node = from || document.activeElement;
+      const sential = scope[scope.length - 1].nextElementSibling;
 
-      let previousNode = focusable.find(
-        (el) =>
-          !!(
-            (node as HTMLElement).compareDocumentPosition(el) &
-            (Node.DOCUMENT_POSITION_PRECEDING | Node.DOCUMENT_POSITION_CONTAINED_BY)
-          ),
-      );
+      const walker = getFocusableTreeWalker(getScopeRoot(scope), { tabbable }, scope);
 
-      if (!previousNode && opts?.wrap) {
-        previousNode = focusable[0];
+      walker.currentNode = isElementInScope(node, scope) ? node : sential;
+
+      let previousNode = walker.previousNode();
+
+      if (!previousNode && wrap) {
+        walker.currentNode = sential;
+        previousNode = walker.previousNode();
       }
 
       if (previousNode) {
-        (previousNode as HTMLElement).focus();
+        focusElement(previousNode as FocusableElement);
       }
 
       return previousNode;

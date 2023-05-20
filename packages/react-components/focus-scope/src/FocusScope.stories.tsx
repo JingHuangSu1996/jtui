@@ -34,7 +34,7 @@ const Template: StoryFn<typeof Component> = (args) => {
   }
 
   return (
-    <Component autoFocus>
+    <Component autoFocus contain>
       <MockButton data-testid="item1">item 1</MockButton>
       <MockButton data-testid="item2">item 2</MockButton>
       <MockButton data-testid="item3">item 3</MockButton>
