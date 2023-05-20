@@ -9,6 +9,8 @@ import { H1, H2, H3, H4 } from '~/components/Heading';
 import { getAllPathsBySection, getDocByPathName, getHeadings, getNavigation } from '~/services';
 import { Paragraph } from '~/components/Paragraph';
 import { Popover, PopoverContent, PopoverTrigger } from '~/components/Popover';
+import { Header as CardHeader, Footer as CardFooter, Card, Content as CardContent } from '~/components/Card';
+import { CollapseButton, Collapsible } from '~/components/Collapsible';
 
 const components = {
   h1: H1,
@@ -19,6 +21,12 @@ const components = {
   PopoverTrigger: PopoverTrigger,
   Popover: Popover,
   PopoverContent: PopoverContent,
+  CardHeader: CardHeader,
+  CardFooter: CardFooter,
+  Card: Card,
+  CardContent: CardContent,
+  CollapseButton: CollapseButton,
+  Collapsible: Collapsible,
 };
 
 export default function Page({ current, source, headings, propsTable, bundleSize, componentName }) {
