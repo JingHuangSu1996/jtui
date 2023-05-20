@@ -77,7 +77,26 @@ export const PopoverContent: React.FC<PopoverContentProps> = ({ children, sideOf
   </StyledPopoverContent>
 );
 
-export const PopoverTrigger = styled(PopoverPrimitive.Trigger, { background: 'transparent', border: 0 });
+export const PopoverTrigger = styled(PopoverPrimitive.Trigger, {
+  background: 'transparent',
+  border: 0,
+  fontSize: theme.fontSizes[300],
+  color: theme.colors['color-text-default'],
+  padding: 0,
+  margin: 0,
+  cursor: 'pointer',
+  '&:after': {
+    content: '?',
+    display: 'inline-block',
+    fontSize: '0.65em',
+    fontWeight: theme.fontWeights.bold,
+    color: 'hsl(333deg, 100%, 52%)',
+    transform: 'translate(10%, -30%)',
+  },
+  '&:hover': {
+    opacity: 0.8,
+  },
+});
 
 /** A Popover is a page overlay triggered by a click that displays additional interactive content. */
 export const Popover = PopoverPrimitive.Root;
