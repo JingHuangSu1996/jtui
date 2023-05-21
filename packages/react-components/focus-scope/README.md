@@ -1,13 +1,9 @@
-# FocusScope
+# `jtui/focus-scope`
 
-```jsx
-import FocusScope from `@jtui/focus-scope`;
+## Installation
 
-function Component() {
-	return (
-		<FocusScope autoFocus contain>
-			// your component
-		</FocusScope>
-	);
-}
+```sh
+$ yarn add @jtui/focus-scope
+# or
+$ npm install @jtui/focus-scope
 ```
