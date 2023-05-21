@@ -1,6 +1,6 @@
 {
   "name": "@jtui/focus-scope",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "JUI FocusScope",
   "license": "MIT",
   "source": "src/index.ts",
@@ -35,5 +35,9 @@
   },
   "peerDependencies": {
     "react": "^16.8.6 || ^17.0.2 || ^18.0.0"
-  }
+  },
+  "keywords": [
+    "focus scope",
+    "accessibility"
+  ]
 }

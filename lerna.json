@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/lerna/schemas/lerna-schema.json",
-  "packages": ["packages/*", "packages/react-components/*", "ui.jing-tech.me/*"],
+  "packages": ["packages/*", "packages/react-components/*", "packages/core/*", "ui.jing-tech.me/*"],
   "version": "independent",
   "npmClient": "yarn",
   "useWorkspaces": true
