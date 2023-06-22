@@ -1,19 +1,16 @@
+/* eslint no-empty: ["error", { "allowEmptyCatch": true }] */
+/* eslint-disable  @typescript-eslint/no-this-alias */
 import React from 'react';
 import { ThemeProvider } from 'next-themes';
+import Script from 'next/script';
 import { DefaultSeo } from 'next-seo';
 import 'react-toastify/dist/ReactToastify.css';
-import { globalStyles, darkTheme, globalCss, theme, config } from '@jtui/theme';
+import { globalStyles, darkTheme, globalCss } from '@washingtonpost/wpds-ui-kit';
 import { useRouter } from 'next/router';
-import SEO from '../next-seo.config';
+import { darkModeStyles } from '~/components/DarkModeStyles';
 import { PageLayout } from '~/components/Layout';
-
-const pageview = (url) => {
-  window.dataLayer = window.dataLayer || [];
-  window.dataLayer.push({
-    event: 'pageview',
-    page: url,
-  });
-};
+import SEO from '../next-seo.config';
+// import "../public/global.css";
 
 const globalTextStyles = globalCss({
   body: {
@@ -24,18 +21,10 @@ const globalTextStyles = globalCss({
 function App({ Component, pageProps }) {
   globalStyles();
   globalTextStyles();
+  darkModeStyles();
+  const router = useRouter();
 
   const getLayout = Component.getLayout;
-
-  const router = useRouter();
-  React.useEffect(() => {
-    router.events.on('routeChangeComplete', pageview);
-    return () => {
-      router.events.off('routeChangeComplete', pageview);
-    };
-  }, [router.events]);
-
-  console.log('=======pageProps=========', pageProps, config);
 
   return (
     <>
@@ -50,6 +39,7 @@ function App({ Component, pageProps }) {
         disableTransitionOnChange={false}
         enableColorScheme={false}
       >
+        <link rel="preconnect" href="https://www.googletagmanager.com" />
         {getLayout ? (
           getLayout(
             <>

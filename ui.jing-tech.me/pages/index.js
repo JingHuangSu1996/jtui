@@ -1,41 +1,145 @@
 import React from 'react';
-import ThemeToggle from '~/components/ThemeToggle';
-import { theme } from '@jtui/theme';
+import { Box, styled, theme, Divider } from '@washingtonpost/wpds-ui-kit';
+
 import { getAllDocs, getNavigation } from '~/services';
+import { Header } from '~/components/Markdown/Components/headers';
+import { LinkText, List, ListItem } from '~/components/Markdown/Components/list';
+import { LandingContentGrid, ContentGrid } from '~/components/Markdown/Components/ResourcesGrids';
+import { SeeAllLink, sortByRank, NewCustomLink } from '~/components/utils';
 
-export const sortByRank = (docs, numToReturn) => {
-  return docs
-    .sort(function (a, b) {
-      try {
-        return a.data.rank - b.data.rank;
-      } catch (TypeError) {
-        return a.data.title.localeCompare(b.data.title);
-      }
-    })
-    .slice(0, numToReturn);
-};
+import Link from 'next/link';
 
-const Index = () => {
+const HeroBlock = styled('div', {
+  gridColumn: 'span 2',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  '@md': {
+    gridColumn: 'span 3',
+  },
+  '@sm': {
+    gridColumn: 'span 1',
+  },
+});
+
+const P = styled('p', {
+  color: theme.colors.accessible,
+  fontSize: theme.fontSizes[100],
+  fontWeight: theme.fontWeights.light,
+  lineHeight: theme.lineHeights[125],
+  marginBlockStart: 0,
+  marginBlockEnd: theme.space['100'],
+});
+
+const BoldTextLooksLikeLink = styled('span', {
+  fontWeight: 'bold',
+  textDecoration: 'underline',
+  marginTop: theme.sizes[100],
+  '@notSm': {
+    bottom: 0,
+    position: 'absolute',
+  },
+});
+
+const Index = ({ recentPosts, rankedArticles, contributors }) => {
   return (
-    <div style={{ background: theme.colors['color-background-default'], height: '100vh' }}>
-      <ThemeToggle
+    <>
+      <LandingContentGrid size="wide">
+        <Box
+          css={{
+            gridColumn: 'span 2',
+            '@sm': {
+              gridColumn: 'span 1',
+            },
+          }}
+        >
+          <Header as="h1">Welcome</Header>
+        </Box>
+        <Box
+          css={{
+            display: 'flex',
+            alignItems: 'flex-end',
+            '@md': { display: 'none' },
+            '@sm': { display: 'none' },
+          }}
+        >
+          <Header
+            href="/resources"
+            as="h2"
+            css={{
+              fontSize: '$125',
+              fontFamily: '$subhead',
+              fontWeight: '$bold',
+              marginBottom: '$025',
+              marginTop: '$100',
+            }}
+          >
+            What&apos;s new
+          </Header>
+        </Box>
+        <HeroBlock>
+          <P css={{ fontSize: '$125', marginBottom: theme.sizes[125] }}>Jing Tech Design System</P>
+        </HeroBlock>
+        <Box
+          css={{
+            display: 'flex',
+            flexDirection: 'column',
+            marginBottom: theme.sizes[100],
+            '@md': { display: 'none' },
+            '@sm': { display: 'none' },
+          }}
+        >
+          <List>
+            {recentPosts &&
+              recentPosts.map((post, i) => {
+                return (
+                  <ListItem css={{ display: `${i > 5 ? 'none' : ''}` }} key={i}>
+                    <P
+                      css={{
+                        color: theme.colors.primary,
+                        fontSize: theme.fontSizes['075'],
+                        fontWeight: theme.fontWeights.bold,
+                        marginBottom: '0',
+                      }}
+                    >
+                      {post.data.publishDate}
+                    </P>
+                    <NewCustomLink css={{ fontSize: '075' }} href={post.slug}>
+                      {post.data.title}
+                    </NewCustomLink>
+                  </ListItem>
+                );
+              })}
+          </List>
+        </Box>
+      </LandingContentGrid>
+
+      <Box
         css={{
-          position: 'fixed',
-          zIndex: '$page',
-          '@notSm': {
-            marginTop: '-$100',
-          },
-          '@sm': {
-            top: '$100',
-            right: '$400',
-          },
+          gridColumn: '1/-1',
         }}
-      />
-    </div>
+      >
+        <Header
+          as="h2"
+          css={{
+            borderTop: '1px solid $subtle',
+            marginBottom: theme.sizes[100],
+            paddingTop: theme.sizes[100],
+            '@sm': { marginTop: 0 },
+          }}
+        >
+          Getting started
+        </Header>
+        <LinkText href="https://www.designsystemchecklist.com/">https://www.designsystemchecklist.com/</LinkText>
+      </Box>
+    </>
   );
 };
-export default Index;
 
+const todaysDate = new Date();
+
+Index.displayName = 'Index';
+
+export default Index;
 export async function getStaticProps() {
   const posts = await getAllDocs();
   const navigation = await getNavigation();
@@ -66,8 +170,6 @@ export async function getStaticProps() {
 
   // uses the ranks inside the docs
   const rankedArticles = [...sortByRank(workshops, 4), ...sortByRank(guides, 2)];
-
-  // const contributors = await getContributors();
 
   return {
     props: { recentPosts, rankedArticles, navigation },

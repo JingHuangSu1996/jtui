@@ -9,7 +9,7 @@ const config = {
     title: 'JTUI Documentation & Resources',
   },
   twitter: {
-    handle: '@wpds',
+    handle: '@jtui',
     site: '@site',
     cardType: 'summary_large_image',
     url: 'https://ui.jing-tech.me/',
