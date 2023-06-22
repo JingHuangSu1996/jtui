@@ -1,5 +1,4 @@
 /* eslint no-empty: ["error", { "allowEmptyCatch": true }] */
-/* eslint-disable  @typescript-eslint/no-this-alias */
 import React from 'react';
 import { ThemeProvider } from 'next-themes';
 import Script from 'next/script';
@@ -10,7 +9,6 @@ import { useRouter } from 'next/router';
 import { darkModeStyles } from '~/components/DarkModeStyles';
 import { PageLayout } from '~/components/Layout';
 import SEO from '../next-seo.config';
-// import "../public/global.css";
 
 const globalTextStyles = globalCss({
   body: {
