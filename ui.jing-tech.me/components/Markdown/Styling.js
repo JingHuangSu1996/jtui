@@ -199,7 +199,6 @@ const components = {
   InlineSVG: dynamic(() => import('./Components/inlineSVG')),
   InlineImage: dynamic(() => import('./Components/InlineImage')),
   Box: Box,
-  code: dynamic(() => import('./Components/Code')),
   pre: dynamic(() => import('./Components/Pre')),
   input: (data) => {
     if (data.type === 'checkbox') {
@@ -228,7 +227,6 @@ const components = {
       {children}
     </Box>
   ),
-  YoutubeEmbed: dynamic(() => import('./Components/YouTubeEmbed')),
   StyleConverter: dynamic(() => import('./Components/StyleConverter')),
   Anatomy: dynamic(() => import('./Components/Anatomy')),
 };
