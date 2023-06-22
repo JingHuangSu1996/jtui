@@ -1,6 +1,5 @@
 import React from 'react';
 import { styled, Icon } from '@washingtonpost/wpds-ui-kit';
-import { Wp } from '@washingtonpost/wpds-assets';
 import Link from 'next/link';
 
 const Container = styled('div', {
