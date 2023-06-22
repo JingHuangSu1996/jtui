@@ -12,9 +12,7 @@ module.exports = withBundleAnalyzer({
     };
   },
   swcMinify: false,
-  images: {
-    domains: [],
-  },
+  images: {},
   async redirects() {
     return [];
   },
