@@ -1,6 +1,6 @@
 {
   "name": "@jtui/carousel",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "JTUI Carousel",
   "license": "MIT",
   "source": "src/index.ts",
@@ -37,7 +37,6 @@
     "react": "^16.8.6 || ^17.0.2 || ^18.0.0"
   },
   "dependencies": {
-    "@radix-ui/react-icons": "^1.3.0",
     "@radix-ui/react-slot": "^1.0.2",
     "scroll-into-view-if-needed": "^3.0.10",
     "smooth-scroll-into-view-if-needed": "^2.0.0"
