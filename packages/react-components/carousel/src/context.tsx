@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 type CarouselContextType = {
   itemRef: (element: HTMLElement) => void;
@@ -15,4 +15,12 @@ type CarouselContextType = {
 
 const CarouselContext = React.createContext<CarouselContextType | null>(null);
 
-export default CarouselContext;
+const useCarouselContext = () => {
+  const carouselContext = useContext(CarouselContext);
+  if (!carouselContext) {
+    throw new Error('useCarouselContext must be used within a CarouselContextProvider');
+  }
+  return carouselContext;
+};
+
+export { CarouselContext, useCarouselContext };

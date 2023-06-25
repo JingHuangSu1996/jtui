@@ -1,13 +1,14 @@
-import React, { useLayoutEffect, useContext } from 'react';
-import { CarouselNextButton as NextButton } from './CarouselNextButton';
-import { CarouselPrevButton as PrevButton } from './CarouselPrevButton';
-import { styled, theme } from '@jtui/theme';
-import CarouselContext from './context';
+import React, { useLayoutEffect } from 'react';
+
 import useHorizontalScroll from './hooks/useHorizontalScroll';
 import useInterval from './hooks/useInterval';
+import { useCarouselContext, CarouselContext } from './context';
+import { CarouselNextButton as NextButton } from './CarouselNextButton';
+import { CarouselPrevButton as PrevButton } from './CarouselPrevButton';
+import { CarouselWrapper, StyledItemsWrapper, StyledItem } from './Carousel.style';
 
 type CarouselRootProps = {
-  children?: React.ReactNode;
+  children: React.ReactNode;
   scrollTo?: number;
   loop?: boolean;
   hideScrollbar?: boolean;
@@ -17,98 +18,13 @@ type CarouselRootProps = {
   autoPlayDelay?: number;
 };
 
-const CarouselWrapper = styled('div', {
-  position: 'relative',
-  width: '100%',
-});
-
-const CardWrapper = styled('div', {
-  display: 'flex',
-  overflowX: 'auto',
-  overflowY: 'hidden',
-  height: 'auto',
-  gap: '1rem', // replace with your value
-  WebkitOverflowScrolling: 'touch',
-  scrollbarWidth: 'none',
-  msOverflowStyle: 'none',
-  '& > li': {
-    listStyle: 'none',
-    '&::before': {
-      position: 'absolute',
-    },
-  },
-  '& > *': {
-    flex: '0 0 auto',
-  },
-  '& > img': {
-    height: '100%',
-    flexBasis: 'auto',
-    width: 'auto',
-  },
-  scrollSnapType: 'x mandatory',
-
-  variants: {
-    autoSlideDelay: {
-      true: { overflowX: 'hidden' },
-      false: {},
-    },
-    isRLT: {
-      flexDirection: 'row-reverse',
-    },
-    horizontalEdgeGap: {
-      true: {
-        padding: (value) => `0 ${value}`,
-        margin: (value) => `0 ${-value}`,
-      },
-      false: {},
-    },
-    hideScrollbar: {
-      true: {
-        '&::-webkit-scrollbar': { display: 'none' },
-        '-ms-overflow-style': 'none',
-        scrollbarWidth: 'none',
-      },
-      false: {},
-    },
-    currentScrollingSpec: {
-      true: {
-        scrollSnapType: 'x mandatory',
-        scrollSnapDestination: 'unset',
-        scrollSnapPointsX: 'unset',
-      },
-      false: {},
-    },
-  },
-});
-
-const StyleItem = styled('li', {
-  display: 'flex',
-  backgroundColor: theme.colors['color-background-secondary-base'],
-  borderRadius: '$100',
-  boxShadow: '0 4px 6px 0 hsla(0, 0%, 0%, 0.07), 0 1px 3px 0 hsla(0, 0%, 0%, 0.06)',
-  padding: '$200',
-  margin: '$200',
-  minWidth: '300px',
-  height: '200px',
-
-  scrollSnapCoordinate: '0 0',
-  variants: {
-    currentScrollingSpec: {
-      true: {
-        scrollSnapAlign: 'center',
-        scrollSnapCoordinate: 'unset',
-      },
-    },
-  },
-});
-
-export const Item = ({ children, classNames }: { children: React.ReactNode; classNames?: string }) => {
-  const { itemRef } = useContext(CarouselContext);
+const Item = ({ children, classNames }: { children: React.ReactNode; classNames?: string }) => {
+  const { itemRef } = useCarouselContext();
 
   return (
-    <StyleItem className={classNames} ref={itemRef} currentScrollingSpec>
+    <StyledItem className={classNames} ref={itemRef} currentScrollingSpec>
       {children}
-    </StyleItem>
+    </StyledItem>
   );
 };
 
@@ -151,9 +67,9 @@ const CarouselRoot = React.forwardRef<HTMLDivElement, CarouselRootProps>(
       >
         <CarouselWrapper>
           <PrevButton />
-          <CardWrapper currentScrollingSpec ref={containerRef} horizontalEdgeGap hideScrollbar={hideScrollbar}>
+          <StyledItemsWrapper currentScrollingSpec horizontalEdgeGap hideScrollbar={hideScrollbar} ref={containerRef}>
             {children}
-          </CardWrapper>
+          </StyledItemsWrapper>
           <NextButton />
         </CarouselWrapper>
       </CarouselContext.Provider>
