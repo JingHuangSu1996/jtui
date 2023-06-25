@@ -43,7 +43,6 @@ const scrollToStep = (
 const calculateActualScrollForIndex = (itemRefs: HTMLElement[], scrollStep: number, toLeft: boolean) => {
   if (toLeft) {
     const firstVisibleIndex = findFirstVisibleIndex(itemRefs);
-    console.log('toLeft', firstVisibleIndex, scrollStep);
     const actualScrollForIndex = firstVisibleIndex < scrollStep ? 0 : firstVisibleIndex - scrollStep;
     return actualScrollForIndex;
   }
